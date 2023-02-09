@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Mujika</string>
+    <string name="title_twibbon">Twibbon</string>
+    <string name="title_cabangrestoran">Cabang Restoran</string>
+    <string name="title_menu">Menu</string>
+    <string name="title_keranjang">Keranjang</string>
+</resources>

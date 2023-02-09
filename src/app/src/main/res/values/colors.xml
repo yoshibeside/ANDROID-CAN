@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="light_cream">#FFF4E7</color>
+    <color name="dark_red">#901C18</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="cream">#F7E1C9</color>
+</resources>
