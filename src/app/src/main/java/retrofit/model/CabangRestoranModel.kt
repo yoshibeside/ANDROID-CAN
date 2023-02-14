@@ -1,4 +1,4 @@
-package com.example.mujika
+package retrofit.model
 
 class CabangRestoranModel (
     private var nama_restoran: String,

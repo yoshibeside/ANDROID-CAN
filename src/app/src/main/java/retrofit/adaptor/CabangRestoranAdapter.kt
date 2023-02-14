@@ -1,22 +1,23 @@
-package com.example.mujika
+package retrofit.adaptor
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import retrofit.model.CabangRestoranModel
+import com.example.mujika.R
 
 class CabangRestoranAdapter(private val courseModelList: ArrayList<CabangRestoranModel>) :
     RecyclerView.Adapter<CabangRestoranAdapter.ViewHolder>() {
     private val courseModelArrayList: ArrayList<CabangRestoranModel>
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CabangRestoranAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // to inflate the layout for each item of recycler view.
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.card_restoran, parent, false)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: CabangRestoranAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // to set data to textview and imageview of each card layout
         val model: CabangRestoranModel = courseModelArrayList[position]
         holder.namaResto.text = model.getNamaRestoran()

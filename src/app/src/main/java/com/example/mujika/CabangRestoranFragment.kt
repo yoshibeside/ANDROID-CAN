@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import retrofit.adaptor.CabangRestoranAdapter
+import retrofit.model.CabangRestoranModel
 
 
 class CabangRestoranFragment : Fragment() {
@@ -26,38 +28,54 @@ class CabangRestoranFragment : Fragment() {
 
         // Here, we have created new array list and added data to it
         val restoranModelArrayList: ArrayList<CabangRestoranModel> = ArrayList<CabangRestoranModel>()
-        restoranModelArrayList.add(CabangRestoranModel(
+        restoranModelArrayList.add(
+            CabangRestoranModel(
             "Cabang Restoran 1",
             "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045"))
-        restoranModelArrayList.add(CabangRestoranModel(
+            "14045")
+        )
+        restoranModelArrayList.add(
+            CabangRestoranModel(
             "Cabang Restoran 2",
             "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045"))
-        restoranModelArrayList.add(CabangRestoranModel(
+            "14045")
+        )
+        restoranModelArrayList.add(
+            CabangRestoranModel(
             "Cabang Restoran 3",
             "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045"))
-        restoranModelArrayList.add(CabangRestoranModel(
+            "14045")
+        )
+        restoranModelArrayList.add(
+            CabangRestoranModel(
             "Cabang Restoran 4",
             "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045"))
-        restoranModelArrayList.add(CabangRestoranModel(
+            "14045")
+        )
+        restoranModelArrayList.add(
+            CabangRestoranModel(
             "Cabang Restoran 5",
             "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045"))
-        restoranModelArrayList.add(CabangRestoranModel(
+            "14045")
+        )
+        restoranModelArrayList.add(
+            CabangRestoranModel(
             "Cabang Restoran 6",
             "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045"))
-        restoranModelArrayList.add(CabangRestoranModel(
+            "14045")
+        )
+        restoranModelArrayList.add(
+            CabangRestoranModel(
             "Cabang Restoran 7",
             "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045"))
-        restoranModelArrayList.add(CabangRestoranModel(
+            "14045")
+        )
+        restoranModelArrayList.add(
+            CabangRestoranModel(
             "Cabang Restoran 8",
             "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045"))
+            "14045")
+        )
 
         val restoranAdapter = CabangRestoranAdapter(restoranModelArrayList)
 
