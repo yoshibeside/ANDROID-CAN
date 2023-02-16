@@ -4,13 +4,23 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit.adaptor.CabangRestoranAdapter
+import retrofit.api.RetrofitClient
 import retrofit.model.CabangRestoranModel
+import retrofit.model.ListCabangRestoran
+
+import kotlinx.android.synthetic.main.fragment_cabang_restoran.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class CabangRestoranFragment : Fragment() {
@@ -20,70 +30,31 @@ class CabangRestoranFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         (activity as AppCompatActivity).supportActionBar?.title = "Cabang Restoran"
 
         val view = inflater.inflate(R.layout.fragment_cabang_restoran, container, false)
         val restoranRV = view.findViewById<RecyclerView>(R.id.idRestoranRV)
+        val errorMsg = view.findViewById<TextView>(R.id.error_msg)
 
-        // Here, we have created new array list and added data to it
-        val restoranModelArrayList: ArrayList<CabangRestoranModel> = ArrayList<CabangRestoranModel>()
-        restoranModelArrayList.add(
-            CabangRestoranModel(
-            "Cabang Restoran 1",
-            "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045")
-        )
-        restoranModelArrayList.add(
-            CabangRestoranModel(
-            "Cabang Restoran 2",
-            "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045")
-        )
-        restoranModelArrayList.add(
-            CabangRestoranModel(
-            "Cabang Restoran 3",
-            "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045")
-        )
-        restoranModelArrayList.add(
-            CabangRestoranModel(
-            "Cabang Restoran 4",
-            "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045")
-        )
-        restoranModelArrayList.add(
-            CabangRestoranModel(
-            "Cabang Restoran 5",
-            "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045")
-        )
-        restoranModelArrayList.add(
-            CabangRestoranModel(
-            "Cabang Restoran 6",
-            "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045")
-        )
-        restoranModelArrayList.add(
-            CabangRestoranModel(
-            "Cabang Restoran 7",
-            "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045")
-        )
-        restoranModelArrayList.add(
-            CabangRestoranModel(
-            "Cabang Restoran 8",
-            "Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132",
-            "14045")
-        )
+        var restoranModelArrayList = ArrayList<CabangRestoranModel>()
 
-        val restoranAdapter = CabangRestoranAdapter(restoranModelArrayList)
+        restoranRV.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
 
-        val linearLayoutManager = LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        RetrofitClient.instance.getRestoran().enqueue(object: Callback<ListCabangRestoran> {
+            override fun onFailure(call: Call<ListCabangRestoran>, t: Throwable) {
+                errorMsg.visibility = VISIBLE
+                restoranRV.visibility = INVISIBLE
+            }
 
-        restoranRV.layoutManager = linearLayoutManager
-        restoranRV.adapter = restoranAdapter
+            override fun onResponse(call: Call<ListCabangRestoran>, response: Response<ListCabangRestoran>) {
+                errorMsg.visibility = INVISIBLE
+                val listResponse = response.body()?.data
+                listResponse?.let {restoranModelArrayList.addAll(it)}
+                restoranRV.adapter = CabangRestoranAdapter(restoranModelArrayList)
 
-        return view
+            }
+        })
+
+        return view;
     }
 }

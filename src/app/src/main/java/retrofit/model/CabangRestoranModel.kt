@@ -1,30 +1,27 @@
 package retrofit.model
 
-class CabangRestoranModel (
-    private var nama_restoran: String,
-    private var alamat_restoran: String,
-    private var telp_restoran: String) {
+import com.google.gson.annotations.SerializedName
 
-    fun getNamaRestoran() : String {
-        return nama_restoran
-    }
-    fun getAlamatRestoran() : String {
-        return alamat_restoran
-    }
+class CabangRestoranModel {
 
-    fun getTelpRestoran() : String {
-        return telp_restoran
-    }
+    @SerializedName("name")
+    val name : String? = null
+    
+    @SerializedName("popular_food")
+    val popular_food : String? = null
 
-    fun setNamaRestoran(nama_restoran: String) {
-        this.nama_restoran = nama_restoran
-    }
+    @SerializedName("address")
+    val address : String? = null
 
-    fun setAlamatRestoran(alamat_restoran: String) {
-        this.alamat_restoran = alamat_restoran
-    }
+    @SerializedName("contact_person")
+    val contact_person : String? = null
 
-    fun setTeleponRestoran(telp_restoran: String) {
-        this.telp_restoran = telp_restoran
-    }
+    @SerializedName("phone_number")
+    val phone_number : String? = null
+
+    @SerializedName("longitude")
+    val longitude : Number? = null
+
+    @SerializedName("latitude")
+    val latitude : Number? = null
 }

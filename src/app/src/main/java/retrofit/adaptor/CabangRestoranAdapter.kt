@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import retrofit.model.CabangRestoranModel
 import com.example.mujika.R
 
-class CabangRestoranAdapter(private val courseModelList: ArrayList<CabangRestoranModel>) :
+class CabangRestoranAdapter(private val cabangModelList: ArrayList<CabangRestoranModel>) :
     RecyclerView.Adapter<CabangRestoranAdapter.ViewHolder>() {
-    private val courseModelArrayList: ArrayList<CabangRestoranModel>
+    private val cabangModelArrayList: ArrayList<CabangRestoranModel> = cabangModelList
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // to inflate the layout for each item of recycler view.
         val view: View = LayoutInflater.from(parent.context).inflate(R.layout.card_restoran, parent, false)
@@ -19,15 +20,15 @@ class CabangRestoranAdapter(private val courseModelList: ArrayList<CabangRestora
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // to set data to textview and imageview of each card layout
-        val model: CabangRestoranModel = courseModelArrayList[position]
-        holder.namaResto.text = model.getNamaRestoran()
-        holder.alamatResto.text = model.getAlamatRestoran()
-        holder.telpResto.text = model.getTelpRestoran()
+        val model: CabangRestoranModel = cabangModelArrayList[position]
+        holder.namaResto.text = model.name
+        holder.alamatResto.text = model.address
+        holder.telpResto.text = model.phone_number
     }
 
     override fun getItemCount(): Int {
         // this method is used for showing number of card items in recycler view.
-        return courseModelArrayList.size
+        return cabangModelArrayList.size
     }
 
     // View holder class for initializing of your views such as TextView and Imageview.
@@ -42,8 +43,4 @@ class CabangRestoranAdapter(private val courseModelList: ArrayList<CabangRestora
         }
     }
 
-    // Constructor
-    init {
-        this.courseModelArrayList = courseModelList
-    }
 }
