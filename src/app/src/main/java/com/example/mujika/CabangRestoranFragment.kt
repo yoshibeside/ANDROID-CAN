@@ -12,12 +12,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlinx.android.synthetic.main.fragment_cabang_restoran.*
 import retrofit.adaptor.CabangRestoranAdapter
 import retrofit.api.RetrofitClient
 import retrofit.model.CabangRestoranModel
 import retrofit.model.ListCabangRestoran
-
-import kotlinx.android.synthetic.main.fragment_cabang_restoran.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,7 +50,6 @@ class CabangRestoranFragment : Fragment() {
                 val listResponse = response.body()?.data
                 listResponse?.let {restoranModelArrayList.addAll(it)}
                 restoranRV.adapter = CabangRestoranAdapter(restoranModelArrayList)
-
             }
         })
 

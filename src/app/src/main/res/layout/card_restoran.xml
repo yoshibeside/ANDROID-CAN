@@ -59,7 +59,7 @@
             app:layout_constraintTop_toBottomOf="@id/idAlamat" />
 
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/launchMapBtn"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:layout_marginTop="8dp"
@@ -67,7 +67,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/idAlamat"
             app:srcCompat="@drawable/baseline_map_24"
-            android:contentDescription="View in Map"/>
+            android:contentDescription="View in Map" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
