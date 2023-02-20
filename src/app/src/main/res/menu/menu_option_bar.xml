@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-  
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <item
+        android:id="@+id/menu_main_setting"
+        android:title="Food"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/menu_main_setting2"
+        android:title="Drink"
+        app:showAsAction="always"/>
 </menu>

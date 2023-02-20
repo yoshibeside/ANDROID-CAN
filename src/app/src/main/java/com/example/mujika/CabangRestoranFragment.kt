@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_cabang_restoran.*
 import retrofit.adaptor.CabangRestoranAdapter
 import retrofit.api.RetrofitClient
 import retrofit.model.CabangRestoranModel
@@ -29,8 +28,7 @@ class CabangRestoranFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AppCompatActivity).supportActionBar?.title = "Cabang Restoran"
-
+        (activity as AppCompatActivity).supportActionBar?.title = ""
         val view = inflater.inflate(R.layout.fragment_cabang_restoran, container, false)
         val restoranRV = view.findViewById<RecyclerView>(R.id.idRestoranRV)
         val errorMsg = view.findViewById<TextView>(R.id.error_msg)

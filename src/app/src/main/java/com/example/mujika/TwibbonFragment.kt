@@ -14,7 +14,7 @@ class TwibbonFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        (activity as AppCompatActivity).supportActionBar?.title = "Twibbon"
+        (activity as AppCompatActivity).supportActionBar?.title = ""
         return inflater.inflate(R.layout.fragment_twibbon, container, false)
     }
 }

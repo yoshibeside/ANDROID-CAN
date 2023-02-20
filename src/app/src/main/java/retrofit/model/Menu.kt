@@ -2,22 +2,22 @@ package retrofit.model
 
 import com.google.gson.annotations.SerializedName
 
-class Menu {
+class MenuItemStuff {
     @SerializedName("name")
-     val name: String? = null
+     var name: String? = null
 
     @SerializedName("description")
-     val description: String? = null
+    var description: String? = null
 
     @SerializedName("currency")
-     val currency: String? = null
+    var currency: String? = null
 
     @SerializedName("price")
-     val price = 0
+    var price = 0
 
     @SerializedName("sold")
-     val sold = 0
+    var sold = 0
 
     @SerializedName("type")
-     val type: String? = null //Getter
+    var type: String? = null //Getter
 }
