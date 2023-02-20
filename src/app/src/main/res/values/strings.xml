@@ -9,4 +9,5 @@
     <string name="alamat_restoran">Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132</string>
     <string name="no_telp_restoran">14045</string>
     <string name="error_msg">Unable to fetch data</string>
+    <string name="photo">Take A Photo</string>
 </resources>

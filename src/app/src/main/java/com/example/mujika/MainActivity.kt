@@ -2,17 +2,11 @@ package com.example.mujika
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.mujika.databinding.ActivityMainBinding
-import roomdb.AppDatabase
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding : ActivityMainBinding
 
 
