@@ -10,4 +10,8 @@ interface APICall {
     fun getMenu(): Call<ListMenu>
     @GET("v1/branch")
     fun getRestoran(): Call<ListCabangRestoran>
+    @GET("v1/menu/food")
+    fun getFood(): Call<ListMenu>
+    @GET("v1/menu/drink")
+    fun getDrink(): Call<ListMenu>
 }

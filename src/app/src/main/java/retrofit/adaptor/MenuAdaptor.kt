@@ -3,14 +3,19 @@ package retrofit.adaptor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mujika.R
-import kotlinx.android.synthetic.main.menu_list.view.*
-import retrofit.model.Menu
+import retrofit.model.MenuItemStuff
 
-class MenuAdapter (private val list: ArrayList<Menu>): RecyclerView.Adapter<MenuAdapter.MenuViewHolder>(){
+class MenuAdapter (private var list: ArrayList<MenuItemStuff>): RecyclerView.Adapter<MenuAdapter.MenuViewHolder>(){
     inner class MenuViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        fun bind(menu: Menu) {
+        fun bind(menu: MenuItemStuff) {
+            val menuName = itemView.findViewById<TextView>(R.id.menuName)
+            val price = itemView.findViewById<TextView>(R.id.price)
+            val amountSold = itemView.findViewById<TextView>(R.id.amountSold)
+            val amount = itemView.findViewById<TextView>(R.id.amount)
+            val description = itemView.findViewById<TextView>(R.id.description)
             with(itemView){
                 menuName.text= "${menu.name}"
                 price.text= "${menu.price} ${menu.currency}"
@@ -31,6 +36,11 @@ class MenuAdapter (private val list: ArrayList<Menu>): RecyclerView.Adapter<Menu
 
     override fun onBindViewHolder(holder:MenuViewHolder, position: Int) {
         holder.bind(list[position])
+    }
+
+    fun filtering(list: ArrayList<MenuItemStuff>) {
+        this.list = list
+        notifyDataSetChanged()
     }
 
 }
