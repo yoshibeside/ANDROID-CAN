@@ -47,6 +47,7 @@ class CabangRestoranFragment : Fragment() {
                 errorMsg.visibility = INVISIBLE
                 val listResponse = response.body()?.data
                 listResponse?.let {restoranModelArrayList.addAll(it)}
+                restoranModelArrayList.sortBy { CabangRestoranModel -> CabangRestoranModel.name }
                 restoranRV.adapter = CabangRestoranAdapter(restoranModelArrayList)
             }
         })
