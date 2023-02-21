@@ -11,4 +11,5 @@
     <string name="error_msg">Unable to fetch data</string>
     <string name="photo">Take A Photo</string>
     <string name="payment_success_msg">Payment Successful</string>
+    <string name="capture">Capture</string>
 </resources>

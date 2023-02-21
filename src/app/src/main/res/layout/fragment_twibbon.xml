@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true">
+
         <androidx.camera.view.PreviewView
             android:id="@+id/viewFinder"
             android:layout_width="300dp"
@@ -20,28 +21,51 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.35"
             />
-        <Button
+
+        <ImageView
+            android:id="@+id/imgFirst"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:src="@drawable/pngtreeyellow_and_blue_twibbon_frame_7362651"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.352"
+            android:contentDescription="@string/title_twibbon"
+            />
+
+        <ImageButton
             android:id="@+id/btnTakePhoto"
             android:layout_width="72dp"
             android:layout_height="72dp"
             android:background="@drawable/baseline_camera_24"
             android:layout_centerHorizontal="true"
+            android:backgroundTint="@color/dark_red"
+            android:contentDescription="@string/photo"
             app:labelVisibilityMode="unlabeled"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.725"
+            app:layout_constraintVertical_bias="0.75"
             />
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--    <Button-->
-<!--        android:id="@+id/btnTakePhoto"-->
-<!--        android:layout_width="72dp"-->
-<!--        android:layout_height="72dp"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:background="@drawable/baseline_camera_24"-->
-<!--        android:drawableTint="@color/dark_red"-->
-<!--        android:layout_marginTop="500dp"-->
-<!--         />-->
+        <TextView
+            android:id="@+id/photoText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/capture"
+            android:textColor="@color/dark_red"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:layout_centerHorizontal="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.81"
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

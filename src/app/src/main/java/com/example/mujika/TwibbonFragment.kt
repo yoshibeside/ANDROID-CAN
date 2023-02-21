@@ -1,12 +1,19 @@
 package com.example.mujika
 
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Canvas
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
@@ -19,6 +26,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.fragment_twibbon.*
 import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.ExecutorService
@@ -36,6 +44,8 @@ class TwibbonFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_twibbon, container, false)
+        val myTextView = view.findViewById<TextView>(R.id.photoText)
+
         val activity = requireActivity()
         outputDirectory = getOutputDirectory()
         cameraExecutor = Executors.newSingleThreadExecutor()
@@ -48,9 +58,10 @@ class TwibbonFragment : Fragment() {
             )
         }
 
-        val photoButton = view.findViewById<MaterialButton>(R.id.btnTakePhoto)
+        val photoButton = view.findViewById<ImageButton>(R.id.btnTakePhoto)
         photoButton.setOnClickListener {
             takePhoto()
+            myTextView.text = "Take again?"
         }
 
         return view
@@ -120,6 +131,7 @@ class TwibbonFragment : Fragment() {
                             "$msg $savedUri",
                             Toast.LENGTH_LONG
                         ).show()
+                        mergeTwibbon(photofiile)
                     }
 
                     override fun onError(exception: ImageCaptureException) {
@@ -169,4 +181,42 @@ class TwibbonFragment : Fragment() {
                 )
             } == PackageManager.PERMISSION_GRANTED
         }
+
+    private fun mergeTwibbon(file: File) {
+        val bitmap1 = BitmapFactory.decodeFile(file.absolutePath, BitmapFactory.Options())
+        val exif = ExifInterface(file.absoluteFile.toString())
+        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+        val matrix = Matrix()
+
+        when(orientation){
+            ExifInterface.ORIENTATION_ROTATE_90-> matrix.postRotate(90f)
+            ExifInterface.ORIENTATION_ROTATE_180-> matrix.postRotate(180f)
+            ExifInterface.ORIENTATION_ROTATE_270-> matrix.postRotate(270f)
+        }
+        val rotatedbitmap1 = Bitmap.createBitmap(bitmap1, 0, 0, bitmap1.width, bitmap1.height, matrix, true)
+        bitmap1.recycle()
+        val bitmap2 = BitmapFactory.decodeResource(resources, R.drawable.pngtreeyellow_and_blue_twibbon_frame_7362651)
+
+        val scalebitmap2 = Bitmap.createScaledBitmap(bitmap2, rotatedbitmap1.width, rotatedbitmap1.height, true)
+        val mergedBitmap = Bitmap.createBitmap(rotatedbitmap1.width, rotatedbitmap1.height, rotatedbitmap1.config)
+        val canvas = Canvas(mergedBitmap)
+        canvas.drawBitmap(rotatedbitmap1, 0f, 0f, null)
+        canvas.drawBitmap(scalebitmap2 ,0f, 0f , null)
+
+        val photofile = File(
+            outputDirectory,
+            "result" + SimpleDateFormat(
+                Constants.FILE_NAME_FORMAT,
+                Locale.getDefault()
+            )
+                .format(
+                    System
+                        .currentTimeMillis()
+                ) + ".jpg"
+        )
+
+        val stream = FileOutputStream(photofile)
+        mergedBitmap.compress(Bitmap.CompressFormat.JPEG,100,stream)
+        stream.close()
+    }
 }
