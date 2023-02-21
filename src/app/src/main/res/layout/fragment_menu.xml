@@ -11,10 +11,9 @@
     tools:context=".MenuFragment">
 
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="782dp">
 
         <LinearLayout
             android:id="@+id/linearLayout"

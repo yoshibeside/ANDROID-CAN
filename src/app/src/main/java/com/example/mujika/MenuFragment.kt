@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.widget.TextView
 import android.widget.SearchView
 import android.widget.Toast
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -29,6 +28,7 @@ class MenuFragment : Fragment() {
 
     private var listMakanan = ArrayList<MenuItemStuff>()
     private var listMinuman = ArrayList<MenuItemStuff>()
+    private var orderedMakananMinuman = ArrayList<MenuItemStuff>()
     private var list = ArrayList<MenuItemStuff>()
     private lateinit var appDb : AppDatabase
 
@@ -50,20 +50,52 @@ class MenuFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view)
+        val searchView = view?.findViewById<SearchView>(R.id.search_view_menu)
         when (item.itemId) {
-            R.id.menu_main_setting -> Toast.makeText(requireContext(), "Food selected", Toast.LENGTH_SHORT).show()
-            R.id.menu_main_setting2 -> Toast.makeText(requireContext(), "Drink Selected", Toast.LENGTH_SHORT).show()
+            R.id.menu_main_setting -> {
+                val adapter = MenuAdapter(listMakanan)
+                recyclerView?.adapter = adapter
+                searchView?.clearFocus()
+                searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return false
+                    }
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        filterList(newText, adapter)
+                        return true
+                    }
+                })
+            }
+            R.id.menu_main_setting2 -> {
+                val adapter = MenuAdapter(listMinuman)
+                recyclerView?.adapter = adapter
+                println("drink letwe go")
+                searchView?.clearFocus()
+                searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return false
+                    }
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        filterList(newText, adapter)
+                        return true
+                    }
+                })
+
+            }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
+
         val messageTest = view.findViewById<TextView>(R.id.message_test)
         val searchView = view.findViewById<SearchView>(R.id.search_view_menu)
-        super.onViewCreated(view, savedInstanceState)
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view)
 
+        super.onViewCreated(view, savedInstanceState)
+        println("dari onViewCreated tiap kali ngetikkah?")
         RetrofitClient.instance.getMenu().enqueue(object: Callback<ListMenu> {
             override fun onFailure(call: Call<ListMenu>, t: Throwable) {
                 println("tidak berhasil people")
@@ -100,8 +132,9 @@ class MenuFragment : Fragment() {
                         listMinuman.add(it)
                     }
                 }
-                listMakanan?.addAll(listMinuman)
-                val adapter = MenuAdapter(listMakanan)
+                orderedMakananMinuman?.addAll(listMakanan)
+                orderedMakananMinuman?.addAll(listMinuman)
+                val adapter = MenuAdapter(orderedMakananMinuman)
 
                 searchView.clearFocus()
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -114,8 +147,8 @@ class MenuFragment : Fragment() {
                     }
                 })
 
-                recyclerView.layoutManager = LinearLayoutManager(activity)
-                recyclerView.adapter = adapter;
+                recyclerView?.layoutManager = LinearLayoutManager(activity)
+                recyclerView?.adapter = adapter;
             }
         })
 
@@ -131,7 +164,7 @@ class MenuFragment : Fragment() {
         if (query != null) {
             val filteredMenu = ArrayList<MenuItemStuff>()
             list.forEach {
-                if (it.name!!.toLowerCase().contains(query.toLowerCase())) {
+                if (it.name?.toLowerCase()!!.contains(query.toLowerCase())) {
                     filteredMenu.add(it)
                 }
             }
@@ -142,5 +175,4 @@ class MenuFragment : Fragment() {
             }
         }
     }
-
 }

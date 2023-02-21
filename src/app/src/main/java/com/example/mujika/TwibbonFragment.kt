@@ -20,11 +20,12 @@ import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.google.android.material.button.MaterialButton
-import kotlinx.android.synthetic.main.fragment_twibbon.*
+//import kotlinx.android.synthetic.main.fragment_twibbon.*
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -153,7 +154,7 @@ class TwibbonFragment : Fragment() {
                     .build()
                     .also { mPreview ->
                         mPreview.setSurfaceProvider(
-                            viewFinder.surfaceProvider
+                            view?.findViewById<PreviewView>(R.id.viewFinder)?.surfaceProvider
                         )
                     }
                 imageCapture = ImageCapture.Builder()

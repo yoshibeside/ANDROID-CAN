@@ -3,6 +3,7 @@ package retrofit.adaptor
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mujika.R
@@ -20,7 +21,7 @@ class MenuAdapter (private var list: ArrayList<MenuItemStuff>): RecyclerView.Ada
                 menuName.text= "${menu.name}"
                 price.text= "${menu.price} ${menu.currency}"
                 amountSold.text= "${menu.sold} Terjual"
-                amount.text= "0"
+                amount.text= menu.getAmount().toString()
                 description.text= "${menu.description}"
 
             }
@@ -36,6 +37,17 @@ class MenuAdapter (private var list: ArrayList<MenuItemStuff>): RecyclerView.Ada
 
     override fun onBindViewHolder(holder:MenuViewHolder, position: Int) {
         holder.bind(list[position])
+        holder.itemView.findViewById<Button>(R.id.plus).setOnClickListener{
+            list.get(position).incrementAmount()
+            holder.itemView.findViewById<TextView>(R.id.amount).text = list.get(position).getAmount().toString()
+            println("berhasil buat nambah " + list.get(position).name + " sebanyak " + list.get(position).getAmount())
+        }
+
+        holder.itemView.findViewById<Button>(R.id.minus).setOnClickListener{
+            list.get(position).decrementAmount()
+            holder.itemView.findViewById<TextView>(R.id.amount).text = list.get(position).getAmount().toString()
+            println("berhasil buat ngurang " + list.get(position).name + " sebanyak " + list.get(position).getAmount())
+        }
     }
 
     fun filtering(list: ArrayList<MenuItemStuff>) {
