@@ -35,9 +35,9 @@ class PaymentSuccessFragment : Fragment() {
             }
 
             override fun onFinish() {
-                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.container, MenuFragment())
-                transaction.commit()
+                val activity = activity as? MainActivity
+                // Menu Fragment should have been created
+                activity?.changeFragment("Menu")
             }
         }
         timer.start()

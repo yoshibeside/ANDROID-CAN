@@ -72,9 +72,8 @@ class PembayaranFragment : Fragment() {
                         val status = gson.fromJson(response.body()?.string(), JsonObject::class.java)?.get("status").toString().replace("\"","")
                         status?.let {
                             if (status == "SUCCESS") {
-                                val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                                transaction.replace(R.id.container, PaymentSuccessFragment())
-                                transaction.commit()
+                                val activity = activity as? MainActivity
+                                activity?.changeFragment("Payment Success")
                             }
                             else {
                                 Toast.makeText(context, "Payment failed", Toast.LENGTH_SHORT).show()
