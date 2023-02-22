@@ -40,6 +40,7 @@ class MenuFragment : Fragment() {
         appDb = AppDatabase.getDatabase(requireContext())
         (activity as AppCompatActivity).supportActionBar?.title = "Menu"
         setHasOptionsMenu(true)
+
         return inflater.inflate(R.layout.fragment_menu, container, false)
     }
 

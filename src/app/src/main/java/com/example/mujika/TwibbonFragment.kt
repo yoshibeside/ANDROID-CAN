@@ -44,6 +44,7 @@ class TwibbonFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(false)
         val view = inflater.inflate(R.layout.fragment_twibbon, container, false)
         val myTextView = view.findViewById<TextView>(R.id.photoText)
 

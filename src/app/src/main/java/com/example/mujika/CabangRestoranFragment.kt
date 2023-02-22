@@ -28,10 +28,11 @@ class CabangRestoranFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        (activity as AppCompatActivity).supportActionBar?.title = ""
+        setHasOptionsMenu(false)
         val view = inflater.inflate(R.layout.fragment_cabang_restoran, container, false)
         val restoranRV = view.findViewById<RecyclerView>(R.id.idRestoranRV)
         val errorMsg = view.findViewById<TextView>(R.id.error_msg)
+
 
         var restoranModelArrayList = ArrayList<CabangRestoranModel>()
 

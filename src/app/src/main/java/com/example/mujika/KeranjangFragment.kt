@@ -13,8 +13,7 @@ class KeranjangFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        (activity as AppCompatActivity).supportActionBar?.title = ""
+        setHasOptionsMenu(false)
         return inflater.inflate(R.layout.fragment_keranjang, container, false)
     }
 }
