@@ -15,18 +15,19 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        changeFragment(TwibbonFragment(), "Twibbon")
+        changeFragment("Twibbon")
         binding.bottomNavigation.setOnItemSelectedListener {
                 when(it.itemId){
-                R.id.menu -> changeFragment(MenuFragment(), "Menu")
-                R.id.cabangrestoran -> changeFragment(CabangRestoranFragment(), "Cabang Restoran")
-                R.id.twibbon -> changeFragment(TwibbonFragment(), "Twibbon")
-                R.id.keranjang -> changeFragment(KeranjangFragment(), "Keranjang")
+                R.id.menu -> changeFragment("Menu")
+                R.id.cabangrestoran -> changeFragment("Cabang Restoran")
+                R.id.twibbon -> changeFragment("Twibbon")
+                R.id.keranjang -> changeFragment("Keranjang")
+                    R.id.pembayaran -> changeFragment("Pembayaran")
             }
             true
         }
     }
-    private fun changeFragment(newFragment : Fragment?, tag: String){
+    public fun changeFragment(tag: String){
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -39,14 +40,23 @@ class MainActivity : AppCompatActivity() {
             tv1.text = ""
         }
 
-        if (fragment == null && newFragment != null) {
-            // create new instance
+        if (fragment == null) {
+            // create new instance according to the tag given
+            val newFragment = when (tag) {
+                "Twibbon" -> TwibbonFragment()
+                "Menu" -> MenuFragment()
+                "Cabang Restoran" -> CabangRestoranFragment()
+                "Keranjang" -> KeranjangFragment()
+                "Payment Success" -> PaymentSuccessFragment()
+                "Pembayaran" -> PembayaranFragment()
+                else -> throw IllegalArgumentException("Fragment type undefined")
+            }
+
             fragmentTransaction.add(R.id.container, newFragment, tag)
             Log.d("TAG", "New $tag created")
         } else {
-            if (fragment != null) {
-                fragmentTransaction.replace(R.id.container, fragment, tag)
-            }
+            // existing instance of fragment found
+            fragmentTransaction.replace(R.id.container, fragment, tag)
             Log.d("TAG", "Reusing existing $tag")
         }
         fragmentTransaction.commit()
