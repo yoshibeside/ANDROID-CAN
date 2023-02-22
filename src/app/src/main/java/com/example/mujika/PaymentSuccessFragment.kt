@@ -1,24 +1,33 @@
 package com.example.mujika
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.*
 
 class PaymentSuccessFragment : Fragment() {
 
     private val time = 5000L
+    private var appBar: AppBarLayout? = null
+    private var bottomNav: BottomNavigationView? = null
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_payment_success, container, false)
+
         val countdownMsg = view.findViewById<TextView>(R.id.countdown)
         val timer = object: CountDownTimer(5000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -28,7 +37,6 @@ class PaymentSuccessFragment : Fragment() {
             override fun onFinish() {
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.container, MenuFragment())
-                transaction.remove(this@PaymentSuccessFragment)
                 transaction.commit()
             }
         }
@@ -37,9 +45,18 @@ class PaymentSuccessFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        val parentView = (view.parent as? FrameLayout)?.parent as? RelativeLayout
+        appBar = parentView?.findViewById<AppBarLayout>(R.id.app_bar)
+        bottomNav = parentView?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
+        appBar?.visibility = View.INVISIBLE
+        bottomNav?.visibility = View.INVISIBLE
+    }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        appBar?.visibility = View.VISIBLE
+        bottomNav?.visibility = View.VISIBLE
     }
 
 }

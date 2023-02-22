@@ -1,11 +1,17 @@
 package com.example.mujika
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.view.ViewParent
+import android.widget.FrameLayout
+import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +21,8 @@ import androidx.lifecycle.lifecycleScope
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
@@ -25,7 +33,10 @@ import retrofit2.Callback
 class PembayaranFragment : Fragment() {
 
     private lateinit var codeScanner: CodeScanner
+    private var appBar: AppBarLayout? = null
+    private var bottomNav: BottomNavigationView? = null
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -34,13 +45,18 @@ class PembayaranFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val parentView = (view.parent as? FrameLayout)?.parent as? RelativeLayout
+        appBar = parentView?.findViewById<AppBarLayout>(R.id.app_bar)
+        bottomNav = parentView?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+
+        appBar?.visibility = INVISIBLE
+        bottomNav?.visibility = INVISIBLE
+
         val scannerView = view.findViewById<CodeScannerView>(R.id.scanner_view)
         val activity = requireActivity()
         codeScanner = CodeScanner(activity, scannerView)
         codeScanner.decodeCallback = DecodeCallback {
             activity.runOnUiThread {
-                // TODO
-                // read the id and show whether payment is successful or not
                 val id = it.text
                 Log.d("TAG", id)
                 RetrofitClient.instance.postPayment(id).enqueue(object: Callback<ResponseBody> {
@@ -53,15 +69,16 @@ class PembayaranFragment : Fragment() {
                         response: retrofit2.Response<ResponseBody>
                     ) {
                         val gson = Gson()
-                        val status = gson.fromJson(response.body()?.string(), JsonObject::class.java).get("status").toString().replace("\"","")
-                        if (status == "SUCCESS") {
-                            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                            transaction.replace(R.id.container, PaymentSuccessFragment())
-                            transaction.remove(this@PembayaranFragment)
-                            transaction.commit()
-                        }
-                        else if (status == "FAILED") {
-                            Toast.makeText(context, "Wrong Code", Toast.LENGTH_SHORT).show()
+                        val status = gson.fromJson(response.body()?.string(), JsonObject::class.java)?.get("status").toString().replace("\"","")
+                        status?.let {
+                            if (status == "SUCCESS") {
+                                val transaction = requireActivity().supportFragmentManager.beginTransaction()
+                                transaction.replace(R.id.container, PaymentSuccessFragment())
+                                transaction.commit()
+                            }
+                            else {
+                                Toast.makeText(context, "Payment failed", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                 })
@@ -82,5 +99,6 @@ class PembayaranFragment : Fragment() {
         codeScanner.releaseResources()
         super.onPause()
     }
+
 
 }
