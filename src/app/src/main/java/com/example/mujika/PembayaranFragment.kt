@@ -46,8 +46,8 @@ class PembayaranFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val parentView = (view.parent as? FrameLayout)?.parent as? RelativeLayout
-        appBar = parentView?.findViewById<AppBarLayout>(R.id.app_bar)
-        bottomNav = parentView?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        appBar = parentView?.findViewById(R.id.app_bar)
+        bottomNav = parentView?.findViewById(R.id.bottom_navigation)
 
         val scannerView = view.findViewById<CodeScannerView>(R.id.scanner_view)
         val activity = requireActivity()
