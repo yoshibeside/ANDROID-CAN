@@ -23,7 +23,7 @@
     androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
 
 ## Foto Screenshot Aplikasi
-    ![Camera](./ss/Camera.png) 
+![Camera](./ss/Camera.png) 
 
 ## Pembagian Tugas
     Database : 13520097
