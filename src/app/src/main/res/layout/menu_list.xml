@@ -73,10 +73,9 @@
                     android:id="@+id/amount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:padding="15dp"
                     android:text="number"
-                    android:textColor="#FFFF"
-                    android:padding="5dp"
-                    />
+                    android:textColor="#FFFF" />
 
                 <Button
                     android:id="@+id/plus"
