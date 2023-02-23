@@ -35,7 +35,11 @@ class KeranjangFragment : Fragment() {
         keranjangDao = appDb.keranjangDao()
         setHasOptionsMenu(false)
         (activity as AppCompatActivity).supportActionBar?.title = ""
+        return view
+    }
 
+    override fun onResume() {
+        super.onResume()
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view_keranjang)
         var list_menu_keranjang = ArrayList<MenuDatabase>()
 
@@ -44,7 +48,6 @@ class KeranjangFragment : Fragment() {
             list_menu_keranjang = ArrayList(tempKeranjang)
         }
         if (!list_menu_keranjang.isNullOrEmpty()) {
-            println("Masuk ya disini??")
             println(list_menu_keranjang)
             val adapter = KeranjangAdaptor(list_menu_keranjang, keranjangDao, object: KeranjangAdaptor.OnDataUpdateListener {
                 override fun onDataUpdate() {
@@ -56,8 +59,5 @@ class KeranjangFragment : Fragment() {
             recyclerView?.layoutManager = LinearLayoutManager(activity)
             recyclerView?.adapter = adapter
         }
-        return view
     }
-
-
 }

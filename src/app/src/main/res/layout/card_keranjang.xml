@@ -58,11 +58,12 @@
                 android:id="@+id/minus_keranjang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                card_view:layout_constraintTop_toTopOf="parent"
-                android:textColor="@color/dark_red"
-                android:minHeight="0dp"
+                android:backgroundTint="@color/cream"
                 android:minWidth="0dp"
-                android:text="-"/>
+                android:minHeight="0dp"
+                android:text="-"
+                android:textColor="@color/dark_red"
+                card_view:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/amount_keranjang"
@@ -77,13 +78,13 @@
                 android:id="@+id/plus_keranjang"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                card_view:layout_constraintStart_toEndOf="@+id/amount"
+                android:backgroundTint="@color/cream"
+                android:minWidth="0dp"
+                android:minHeight="0dp"
                 android:text="+"
                 android:textColor="@color/dark_red"
-                android:minHeight="0dp"
-                android:minWidth="0dp"
-                card_view:layout_constraintTop_toTopOf="parent"
-                />
+                card_view:layout_constraintStart_toEndOf="@+id/amount"
+                card_view:layout_constraintTop_toTopOf="parent" />
 
         </LinearLayout>
 

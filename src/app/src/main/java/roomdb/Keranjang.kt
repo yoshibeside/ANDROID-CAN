@@ -11,5 +11,5 @@ data class MenuDatabase(
     @ColumnInfo(name = "price_menu") val price: Int?,
     @ColumnInfo(name = "sold_menu") val sold: Int?,
     @ColumnInfo(name = "currency_menu") val currencies: String?,
-    @ColumnInfo(name = "amount_menu") val amount: Int?,
+    @ColumnInfo(name = "amount_menu") var amount: Int?,
 )
