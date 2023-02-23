@@ -13,7 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.*
+//import kotlinx.android.synthetic.*
 
 class PaymentSuccessFragment : Fragment() {
 
@@ -36,6 +36,7 @@ class PaymentSuccessFragment : Fragment() {
 
             override fun onFinish() {
                 val activity = activity as? MainActivity
+                activity?.removeFragment("Keranjang")
                 // Menu Fragment should have been created
                 activity?.changeFragment("Menu")
             }

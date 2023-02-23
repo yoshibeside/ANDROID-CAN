@@ -70,4 +70,16 @@ class KeranjangFragment : Fragment() {
             recyclerView?.adapter = adapter
         }
     }
+
+    override fun onDestroy() {
+        keranjangDao.update()
+        println("did it go here? destroy keranjang pls")
+        super.onDestroy()
+    }
+
+    override fun onDetach() {
+        keranjangDao.update()
+        println("did it go here? destroy keranjang pls this is detach tho")
+        super.onDetach()
+    }
 }
