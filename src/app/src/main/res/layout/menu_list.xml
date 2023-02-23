@@ -56,13 +56,18 @@
 
                 <Button
                     android:id="@+id/minus"
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    card_view:layout_constraintTop_toTopOf="parent"
+                    android:width="48dp"
+                    android:height="48dp"
+                    android:backgroundTint="@color/cream"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
+                    android:text="-"
                     android:textColor="@color/dark_red"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    android:text="-"/>
+                    card_view:iconPadding="0dp"
+                    card_view:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/amount"
@@ -77,13 +82,15 @@
                     android:id="@+id/plus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    card_view:layout_constraintStart_toEndOf="@+id/amount"
+                    android:backgroundTint="@color/cream"
+                    android:width="48dp"
+                    android:height="48dp"
+                    android:minWidth="48dp"
+                    android:minHeight="48dp"
                     android:text="+"
                     android:textColor="@color/dark_red"
-                    android:minHeight="0dp"
-                    android:minWidth="0dp"
-                    card_view:layout_constraintTop_toTopOf="parent"
-                    />
+                    card_view:layout_constraintStart_toEndOf="@+id/amount"
+                    card_view:layout_constraintTop_toTopOf="parent" />
                 
             </LinearLayout>
             
