@@ -74,8 +74,6 @@ class MainActivity : AppCompatActivity() {
         val fragmentTransaction = fragmentManager.beginTransaction()
         var fragment = fragmentManager.findFragmentByTag(tag)
 
-        changeToolbar(tag)
-
         if (fragment == null) {
             // create new instance according to the tag given
             fragment = when (tag) {
@@ -96,6 +94,8 @@ class MainActivity : AppCompatActivity() {
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
+        changeToolbar(tag)
+        updateBottomNav(tag)
     }
 
     public fun removeFragment(tag: String) {
@@ -120,14 +120,12 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val view = supportFragmentManager.findFragmentById(R.id.container)
-        val itemId = when (view){
-            is TwibbonFragment -> R.id.twibbon
-            is MenuFragment -> R.id.menu
-            is CabangRestoranFragment -> R.id.cabangrestoran
-            is KeranjangFragment -> R.id.keranjang
+    private fun updateBottomNav(tag: String?) {
+        val itemId = when (tag){
+            "Twibbon" -> R.id.twibbon
+            "Menu" -> R.id.menu
+            "Cabang Restoran" -> R.id.cabangrestoran
+            "Keranjang" -> R.id.keranjang
             else -> null
         }
         if (itemId != null) {
@@ -136,8 +134,17 @@ class MainActivity : AppCompatActivity() {
                 bottomNavMenu.getItem(i).isChecked = false
             }
             bottomNavMenu.findItem(itemId as Int).isChecked = true
+        }
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val view = supportFragmentManager.findFragmentById(R.id.container)
+        if (view != null) {
             viewModel.currentFragmentTag = view?.tag
             changeToolbar(view?.tag.toString())
+            val tag = supportFragmentManager.findFragmentById(R.id.container)?.tag
+            updateBottomNav(tag)
         } else {
             // no fragment exists
             AlertDialog.Builder(this)
