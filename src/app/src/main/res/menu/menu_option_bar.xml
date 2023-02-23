@@ -13,4 +13,8 @@
         android:id="@+id/menu_main_setting2"
         android:title="Drink"
         app:showAsAction="always"/>
+    <item
+        android:id="@+id/menu_tempeture"
+        android:title="0°C"
+        app:showAsAction="always"/>
 </menu>

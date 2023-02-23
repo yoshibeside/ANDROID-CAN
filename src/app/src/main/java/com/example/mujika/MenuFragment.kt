@@ -1,21 +1,28 @@
 package com.example.mujika
 
+import android.content.Context
+import android.content.res.Configuration
 import android.graphics.Color
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.*
 import androidx.fragment.app.Fragment
-import android.widget.TextView
-import android.widget.SearchView
 import android.widget.Toast
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.Menu
 import android.view.MenuItem
+import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.content.getSystemService
 import kotlinx.coroutines.launch
 import retrofit.adaptor.MenuAdapter
 import retrofit.api.RetrofitClient
@@ -29,12 +36,15 @@ import roomdb.KeranjangDao
 import roomdb.MenuDatabase
 import roomdb.TypeMenu
 
-class MenuFragment : Fragment() {
+class MenuFragment : Fragment(), SensorEventListener {
 
     private var listMakanan = ArrayList<MenuDatabase>()
     private var listMinuman = ArrayList<MenuDatabase>()
     private var list = ArrayList<MenuItemStuff>()
     private lateinit var keranjangDao : KeranjangDao
+    private var temperatureItem: Menu? = null
+    private lateinit var sensorManager: SensorManager
+    private var suhuSensor: Sensor? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,10 +54,18 @@ class MenuFragment : Fragment() {
         val appDb = AppDatabase.getDatabase(requireContext())
         keranjangDao = appDb.keranjangDao()
         (activity as AppCompatActivity).supportActionBar?.title = "Menu"
-        setHasOptionsMenu(true)
 
+        setHasOptionsMenu(true)
         val view = inflater.inflate(R.layout.fragment_menu, container, false)
 
+        sensorManager = requireContext().getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        suhuSensor = sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE)
+
+        if(sensorManager.getDefaultSensor(Sensor.TYPE_AMBIENT_TEMPERATURE) !=null){
+            Toast.makeText(requireContext(), "Sensor Temperature Available.", Toast.LENGTH_SHORT).show()
+        } else{
+            Toast.makeText(requireContext(), "Sensor Temperature Not Available", Toast.LENGTH_SHORT).show()
+        }
 
         RetrofitClient.instance.getMenu().enqueue(object: Callback<ListMenu> {
             override fun onFailure(call: Call<ListMenu>, t: Throwable) {
@@ -112,9 +130,11 @@ class MenuFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        println("THIS SHOULD HAVE SOMETHING INSIDE")
+        suhuSensor?.let {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+
         if (!list.isNullOrEmpty()) {
-            println("JUmlahnya adalah sebagai berikut ")
             val searchView = view?.findViewById<SearchView>(R.id.search_view_menu)
             val recyclerViewMinuman = view?.findViewById<RecyclerView>(R.id.recycler_view_minuman)
 
@@ -143,10 +163,16 @@ class MenuFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.menu_option_bar, menu)
+        temperatureItem = menu
         menu?.let {
             val menuItem1 = it.findItem(R.id.menu_main_setting)
             val title1 = SpannableString(menuItem1.title)
@@ -197,6 +223,18 @@ class MenuFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+        //lewat saja
+    }
+    override fun onSensorChanged(p0: SensorEvent?) {
+        val suhu = p0?.values?.get(0)
+        val textTemp = String.format("%.2f°C", suhu)
+        temperatureItem?.let {
+            val tempItem = it.findItem(R.id.menu_tempeture)
+            tempItem.title= textTemp
+        }
     }
 
     private fun writeData(data: MenuDatabase) {
