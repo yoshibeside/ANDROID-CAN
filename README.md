@@ -1,7 +1,7 @@
 # Tugas Besar 1 - IF3210 Pengembangan Aplikasi pada Platform Khusus
 
 ## Deskripsi Aplikasi ANDROID CAN
-    Aplikasi yang dikembangkan dalam Android ini memiliki nama **Mujika**. Aplikasi ini memiliki beberapa fitur. Fitur pertama adalah twibbon, mengambil foto dari kamera dan secara otomatis memasang twibon ke foto tersebut. Fitur lain adalah lokasi cabang, ditunjukkan cabang beserta lokasinya dengasn menggunakan google map. Fitur lainnya adalah menu, kita bisa memesan makanan atau minuman serta membayarnya menggunakan scan QR. Fitur lain yang berhubungan adalah keranjang, pesanan dari makanan dan/atau minuman akan disimpan di keranjang sebelum dibayar.
+Aplikasi yang dikembangkan dalam Android ini memiliki nama **Mujika**. Aplikasi ini memiliki beberapa fitur. Fitur pertama adalah twibbon, mengambil foto dari kamera dan secara otomatis memasang twibon ke foto tersebut. Fitur lain adalah lokasi cabang, ditunjukkan cabang beserta lokasinya dengasn menggunakan google map. Fitur lainnya adalah menu, kita bisa memesan makanan atau minuman serta membayarnya menggunakan scan QR. Fitur lain yang berhubungan adalah keranjang, pesanan dari makanan dan/atau minuman akan disimpan di keranjang sebelum dibayar.
 
 ## Library yang Digunakan 
     androidx.core:core-ktx:1.9.0
@@ -24,6 +24,7 @@
 
 ## Foto Screenshot Aplikasi
 ![alt text](./ss/Camera.png "Twibbon beserta Navbar dan Header"){height=300}
+Twibbon beserta Navbar dan Header
 
 ## Pembagian Tugas
     Database : 13520097
