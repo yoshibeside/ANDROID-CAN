@@ -23,7 +23,7 @@
     androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
 
 ## Foto Screenshot Aplikasi
-    ![1](./ss/Camera.png) 
+    ![Camera](./ss/Camera.png) 
     Twibbon beserta Navbar dan Header
 
 ## Pembagian Tugas
