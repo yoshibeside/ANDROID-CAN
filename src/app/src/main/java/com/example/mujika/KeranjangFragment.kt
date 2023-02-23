@@ -2,6 +2,7 @@ package com.example.mujika
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
 import android.widget.SearchView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -36,6 +37,15 @@ class KeranjangFragment : Fragment() {
         setHasOptionsMenu(false)
         (activity as AppCompatActivity).supportActionBar?.title = ""
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val bayarBtn = view.findViewById<Button>(R.id.bayar)
+        bayarBtn.setOnClickListener {
+            val activity = activity as? MainActivity
+            activity?.changeFragment("Pembayaran")
+        }
     }
 
     override fun onResume() {

@@ -87,15 +87,12 @@ class MainActivity : AppCompatActivity() {
                 "Pembayaran" -> PembayaranFragment()
                 else -> throw IllegalArgumentException("Fragment type undefined")
             }
-
-            fragmentTransaction.add(R.id.container, fragment, tag)
             Log.d("TAG", "New $tag created")
         } else {
             // existing instance of fragment found
-            fragmentTransaction.replace(R.id.container, fragment, tag)
             Log.d("TAG", "Reusing existing $tag")
         }
-
+        fragmentTransaction.replace(R.id.container, fragment, tag)
         fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
 
