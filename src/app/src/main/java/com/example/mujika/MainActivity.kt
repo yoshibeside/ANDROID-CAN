@@ -136,6 +136,7 @@ class MainActivity : AppCompatActivity() {
                 bottomNavMenu.getItem(i).isChecked = false
             }
             bottomNavMenu.findItem(itemId as Int).isChecked = true
+            viewModel.currentFragmentTag = view?.tag
             changeToolbar(view?.tag.toString())
         } else {
             // no fragment exists
