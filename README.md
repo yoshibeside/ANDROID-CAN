@@ -24,7 +24,6 @@
 
 ## Foto Screenshot Aplikasi
     ![Camera](./ss/Camera.png) 
-    Twibbon beserta Navbar dan Header
 
 ## Pembagian Tugas
     Database : 13520097
