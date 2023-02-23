@@ -1,6 +1,10 @@
 package com.example.mujika
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.TextView
@@ -114,6 +118,17 @@ class MenuFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         menu.clear()
         inflater.inflate(R.menu.menu_option_bar, menu)
+        menu?.let {
+            val menuItem1 = it.findItem(R.id.menu_main_setting)
+            val title1 = SpannableString(menuItem1.title)
+            title1.setSpan(ForegroundColorSpan(Color.BLACK), 0, title1.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+            menuItem1.title = title1
+
+            val menuItem2 = it.findItem(R.id.menu_main_setting2)
+            val title2 = SpannableString(menuItem2.title)
+            title2.setSpan(ForegroundColorSpan(Color.BLACK), 0, title2.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
+            menuItem2.title = title2
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
