@@ -118,6 +118,18 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         val view = supportFragmentManager.findFragmentById(R.id.container)
+        val bottomNavMenu = findViewById<BottomNavigationView>(R.id.bottom_navigation).menu
+        for (i in 0 until bottomNavMenu.size()) {
+            bottomNavMenu.getItem(i).isChecked = false
+        }
+        val itemId = when (view){
+            is TwibbonFragment -> R.id.twibbon
+            is MenuFragment -> R.id.menu
+            is CabangRestoranFragment -> R.id.cabangrestoran
+            is KeranjangFragment -> R.id.keranjang
+            else -> throw IllegalArgumentException("Fragment type undefined")
+        }
+        bottomNavMenu.findItem(itemId).isChecked = true
 
         changeToolbar(view?.tag.toString())
     }
