@@ -48,13 +48,17 @@ class PaymentSuccessFragment : Fragment() {
         val parentView = (view.parent as? FrameLayout)?.parent as? RelativeLayout
         appBar = parentView?.findViewById<AppBarLayout>(R.id.app_bar)
         bottomNav = parentView?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
+    }
 
+    override fun onResume() {
+        super.onResume()
         appBar?.visibility = View.INVISIBLE
         bottomNav?.visibility = View.INVISIBLE
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+
+    override fun onPause() {
+        super.onPause()
         appBar?.visibility = View.VISIBLE
         bottomNav?.visibility = View.VISIBLE
     }

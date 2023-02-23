@@ -3,9 +3,15 @@ package com.example.mujika
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
+import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import com.example.mujika.databinding.ActivityMainBinding
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
@@ -59,6 +65,8 @@ class MainActivity : AppCompatActivity() {
             fragmentTransaction.replace(R.id.container, fragment, tag)
             Log.d("TAG", "Reusing existing $tag")
         }
+        fragmentTransaction.addToBackStack(null)
         fragmentTransaction.commit()
     }
+
 }

@@ -49,9 +49,6 @@ class PembayaranFragment : Fragment() {
         appBar = parentView?.findViewById<AppBarLayout>(R.id.app_bar)
         bottomNav = parentView?.findViewById<BottomNavigationView>(R.id.bottom_navigation)
 
-        appBar?.visibility = INVISIBLE
-        bottomNav?.visibility = INVISIBLE
-
         val scannerView = view.findViewById<CodeScannerView>(R.id.scanner_view)
         val activity = requireActivity()
         codeScanner = CodeScanner(activity, scannerView)
@@ -92,12 +89,16 @@ class PembayaranFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         codeScanner.startPreview()
+        appBar?.visibility = INVISIBLE
+        bottomNav?.visibility = INVISIBLE
     }
+
 
     override fun onPause() {
         codeScanner.releaseResources()
         super.onPause()
+        appBar?.visibility = VISIBLE
+        bottomNav?.visibility = VISIBLE
     }
-
 
 }
