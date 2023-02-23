@@ -11,6 +11,6 @@
         android:text="Makanan"
         android:textColor="@color/black"
         android:layout_marginTop ="10px"
-        android:layout_marginLeft="15px"/>
+        android:layout_marginLeft="20px"/>
 
 </FrameLayout>

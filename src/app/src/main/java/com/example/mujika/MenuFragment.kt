@@ -33,8 +33,6 @@ class MenuFragment : Fragment() {
 
     private var listMakanan = ArrayList<MenuDatabase>()
     private var listMinuman = ArrayList<MenuDatabase>()
-    private var tempMakananFilter = ArrayList<MenuDatabase>()
-    private var tempMinumanFilter = ArrayList<MenuDatabase>()
     private var list = ArrayList<MenuItemStuff>()
     private lateinit var keranjangDao : KeranjangDao
 
@@ -86,8 +84,6 @@ class MenuFragment : Fragment() {
                 lifecycleScope.launch() {
                     val tempMakanan = keranjangDao.findByType(TypeMenu.Food)
                     val tempMinuman = keranjangDao.findByType(TypeMenu.Drink)
-                    tempMakananFilter = ArrayList(keranjangDao.findByType(TypeMenu.Food))
-                    tempMinumanFilter = ArrayList(keranjangDao.findByType(TypeMenu.Drink))
                     listMakanan = ArrayList(tempMakanan)
                     listMinuman = ArrayList(tempMinuman)
                 }
@@ -214,12 +210,12 @@ class MenuFragment : Fragment() {
             var filteredMenuMakanan = ArrayList<MenuDatabase>()
             var filteredMenuMinuman = ArrayList<MenuDatabase>()
 
-            tempMakananFilter.forEach {
+            listMakanan.forEach {
                 if (it.name_menu?.lowercase()!!.contains(query.lowercase())) {
                     filteredMenuMakanan.add(it)
                 }
             }
-            tempMinumanFilter.forEach {
+            listMinuman.forEach {
                 if (it.name_menu?.lowercase()!!.contains(query.lowercase())) {
                     filteredMenuMinuman.add(it)
                 }
