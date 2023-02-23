@@ -37,7 +37,7 @@ class TwibbonFragment : Fragment() {
 
     private var imageCapture: ImageCapture? = null
     private lateinit var outputDirectory: File
-    private lateinit var cameraExecutor: ExecutorService
+    private var cameraExecutor: ExecutorService? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,7 +71,7 @@ class TwibbonFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        cameraExecutor.shutdown()
+        cameraExecutor?.shutdown()
     }
 
     override fun onRequestPermissionsResult(
