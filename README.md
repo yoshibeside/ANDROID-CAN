@@ -17,10 +17,10 @@ Aplikasi yang dikembangkan dalam Android ini memiliki nama **Mujika**. Aplikasi 
     com.squareup.retrofit2:retrofit:2.9.0
     com.squareup.retrofit2:converter-gson:2.9.0
     com.github.yuriy-budiyev:code-scanner:2.3.2
-    androidx.room:room-ktx:$2.5.0"
-    androidx.room:room-runtime:$2.5.0"
-    androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
-    androidx.lifecycle:lifecycle-runtime-ktx:2.5.1"
+    androidx.room:room-ktx:$2.5.0
+    androidx.room:room-runtime:$2.5.0
+    androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1
+    androidx.lifecycle:lifecycle-runtime-ktx:2.5.1
 
 ## Foto Screenshot Aplikasi
 ![alt text](./ss/Camera.png "Twibbon beserta Navbar dan Header"){height=300}
