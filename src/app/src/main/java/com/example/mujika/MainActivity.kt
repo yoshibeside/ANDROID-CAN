@@ -2,27 +2,28 @@ package com.example.mujika
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
+import androidx.lifecycle.ViewModelProvider
 import com.example.mujika.databinding.ActivityMainBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
+    private var menu: Menu? = null
+    private lateinit var viewModel: ViewModelHolder
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(findViewById(R.id.Toolbar))
-        supportActionBar?.title = ""
-
-        changeFragment("Twibbon")
-
         binding.bottomNavigation.setOnItemSelectedListener {
-                when(it.itemId){
+            when(it.itemId){
                 R.id.menu -> changeFragment("Menu")
                 R.id.cabangrestoran -> changeFragment("Cabang Restoran")
                 R.id.twibbon -> changeFragment("Twibbon")
@@ -30,9 +31,44 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+
+        viewModel = ViewModelProvider(this).get(ViewModelHolder::class.java)
+
+        if (savedInstanceState == null) {
+            supportActionBar?.title = ""
+            changeFragment("Twibbon")
+        } else {
+            val fragmentTags = viewModel.fragmentStack
+            for (tag in fragmentTags) {
+                supportFragmentManager.findFragmentByTag(tag)?.let {
+                    supportFragmentManager
+                        .beginTransaction()
+                        .attach(it)
+                        .commit()
+                }
+            }
+
+            viewModel.currentFragmentTag?.let {
+                changeFragment(it)
+            }
+
+        }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
+        super.onSaveInstanceState(outState, outPersistentState)
+
+        val fragmentTags = viewModel.fragmentStack
+        fragmentTags.clear()
+        for (i in 0 until supportFragmentManager.backStackEntryCount) {
+            fragmentTags.add(supportFragmentManager.getBackStackEntryAt(i).name!!)
+        }
+        viewModel.currentFragmentTag = supportFragmentManager.findFragmentById(R.id.container)?.tag
     }
     @SuppressLint("RestrictedApi", "ResourceType")
     public fun changeFragment(tag: String){
+
+        viewModel.currentFragmentTag = tag
 
         val fragmentManager = supportFragmentManager
         val fragmentTransaction = fragmentManager.beginTransaction()
@@ -82,9 +118,10 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         val view = supportFragmentManager.findFragmentById(R.id.container)
+
         changeToolbar(view?.tag.toString())
     }
-    private var menu: Menu? = null
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_option_bar, menu)
         this.menu = menu
