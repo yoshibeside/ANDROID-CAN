@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
 
-@Database(entities = [MenuDatabase :: class], version = 1)
+@Database(entities = [MenuDatabase :: class], version = 2, exportSchema = true)
 @TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase(){
 
@@ -31,7 +31,7 @@ abstract class AppDatabase : RoomDatabase(){
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_database"
-                ).build()
+                ).fallbackToDestructiveMigration().allowMainThreadQueries().build()
                 INSTANCE = instance
                 return instance
 
