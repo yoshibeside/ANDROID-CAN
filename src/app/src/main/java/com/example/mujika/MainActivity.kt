@@ -98,6 +98,14 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    public fun removeFragment(tag: String) {
+        val fragmentManager = supportFragmentManager
+        val fragment = fragmentManager.findFragmentByTag(tag)
+        if (fragment != null) {
+            fragmentManager.beginTransaction().remove(fragment).commit()
+        }
+    }
+
     private fun changeToolbar(tag: String) {
         val toolbarTitle = findViewById<TextView>(R.id.toolbar_title)
 
