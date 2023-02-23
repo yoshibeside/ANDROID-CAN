@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.cabangrestoran -> changeFragment("Cabang Restoran")
                 R.id.twibbon -> changeFragment("Twibbon")
                 R.id.keranjang -> changeFragment("Keranjang")
-                    R.id.pembayaran -> changeFragment("Pembayaran")
             }
             true
         }

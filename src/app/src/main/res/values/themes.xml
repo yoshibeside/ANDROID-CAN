@@ -2,11 +2,8 @@
     <!-- Base application theme. -->
     <style name="Theme.Mujika" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/cream</item>
+        <item name="colorPrimary">@color/dark_red</item>
+        <item name="colorSecondary">@color/cream</item>
         <item name="colorPrimaryDark">@color/black</item>
-<!--        &lt;!&ndash; Secondary brand color. &ndash;&gt;-->
-<!--        <item name="colorSecondary">@color/dark_red</item>-->
-<!--        <item name="colorSecondaryVariant">@color/dark_red</item>-->
-<!--        <item name="colorOnSecondary">@color/black</item>-->
     </style>
 </resources>
