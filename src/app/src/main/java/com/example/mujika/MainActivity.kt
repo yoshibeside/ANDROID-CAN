@@ -6,8 +6,8 @@ import android.os.PersistableBundle
 import android.util.Log
 import android.view.Menu
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.lifecycle.ViewModelProvider
 import com.example.mujika.databinding.ActivityMainBinding
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -118,20 +118,33 @@ class MainActivity : AppCompatActivity() {
     override fun onBackPressed() {
         super.onBackPressed()
         val view = supportFragmentManager.findFragmentById(R.id.container)
-        val bottomNavMenu = findViewById<BottomNavigationView>(R.id.bottom_navigation).menu
-        for (i in 0 until bottomNavMenu.size()) {
-            bottomNavMenu.getItem(i).isChecked = false
-        }
         val itemId = when (view){
             is TwibbonFragment -> R.id.twibbon
             is MenuFragment -> R.id.menu
             is CabangRestoranFragment -> R.id.cabangrestoran
             is KeranjangFragment -> R.id.keranjang
-            else -> throw IllegalArgumentException("Fragment type undefined")
+            else -> null
         }
-        bottomNavMenu.findItem(itemId).isChecked = true
-
-        changeToolbar(view?.tag.toString())
+        if (itemId != null) {
+            val bottomNavMenu = findViewById<BottomNavigationView>(R.id.bottom_navigation).menu
+            for (i in 0 until bottomNavMenu.size()) {
+                bottomNavMenu.getItem(i).isChecked = false
+            }
+            bottomNavMenu.findItem(itemId as Int).isChecked = true
+            changeToolbar(view?.tag.toString())
+        } else {
+            // no fragment exists
+            AlertDialog.Builder(this)
+                .setTitle("Exit App")
+                .setMessage("Are you sure you want to exit?")
+                .setPositiveButton("Yes") { _, _ ->
+                    finish()
+                }
+                .setNegativeButton("No") { _, _ ->
+                    changeFragment("Twibbon")
+                }
+                .show()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
