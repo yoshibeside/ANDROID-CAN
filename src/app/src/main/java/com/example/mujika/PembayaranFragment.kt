@@ -15,12 +15,14 @@ import android.widget.RelativeLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.CameraSelector
 import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
+import com.budiyev.android.codescanner.ScanMode
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
@@ -49,9 +51,13 @@ class PembayaranFragment : Fragment() {
         appBar = parentView?.findViewById(R.id.app_bar)
         bottomNav = parentView?.findViewById(R.id.bottom_navigation)
 
+        val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+
         val scannerView = view.findViewById<CodeScannerView>(R.id.scanner_view)
         val activity = requireActivity()
         codeScanner = CodeScanner(activity, scannerView)
+        codeScanner.formats = CodeScanner.TWO_DIMENSIONAL_FORMATS
+        codeScanner.scanMode = ScanMode.CONTINUOUS
         codeScanner.decodeCallback = DecodeCallback {
             activity.runOnUiThread {
                 val id = it.text

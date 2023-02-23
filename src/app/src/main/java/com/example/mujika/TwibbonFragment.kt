@@ -174,6 +174,24 @@ class TwibbonFragment : Fragment() {
         )
     }
 
+    override fun onPause() {
+        Log.d("TAG", "Camera is onpause")
+        super.onPause()
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+        cameraProviderFuture.addListener({
+            val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
+            cameraProvider.unbindAll()
+        }, ContextCompat.getMainExecutor(requireContext()))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startCamera()
+    }
+
+
+
+
     private fun allPermissionGranted() =
 
         Constants.REQUIRED_PERMISSIONS.all {
