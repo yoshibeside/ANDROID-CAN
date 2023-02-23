@@ -15,6 +15,6 @@
         app:showAsAction="always"/>
     <item
         android:id="@+id/menu_tempeture"
-        android:title="0°C"
+        android:title=""
         app:showAsAction="always"/>
 </menu>
