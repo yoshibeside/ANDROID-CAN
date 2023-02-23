@@ -33,6 +33,7 @@
                 android:background="@drawable/search_var_bg"
                 android:elevation="2dp"
                 android:iconifiedByDefault="false"
+                android:searchIcon="@null"
                 android:theme="@style/SearchViewTheme" />
 
         </LinearLayout>
