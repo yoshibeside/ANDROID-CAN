@@ -8,20 +8,22 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mujika.R
 import retrofit.model.MenuItemStuff
+import roomdb.KeranjangDao
+import roomdb.MenuDatabase
 
-class MenuAdapter (private var list: ArrayList<MenuItemStuff>): RecyclerView.Adapter<MenuAdapter.MenuViewHolder>(){
+class MenuAdapter (private var list: ArrayList<MenuDatabase>, private val keranjangDao: KeranjangDao ): RecyclerView.Adapter<MenuAdapter.MenuViewHolder>(){
     inner class MenuViewHolder(itemView: View):RecyclerView.ViewHolder(itemView) {
-        fun bind(menu: MenuItemStuff) {
+        fun bind(menu: MenuDatabase) {
             val menuName = itemView.findViewById<TextView>(R.id.menuName)
             val price = itemView.findViewById<TextView>(R.id.price)
             val amountSold = itemView.findViewById<TextView>(R.id.amountSold)
             val amount = itemView.findViewById<TextView>(R.id.amount)
             val description = itemView.findViewById<TextView>(R.id.description)
             with(itemView){
-                menuName.text= "${menu.name}"
-                price.text= "${menu.price} ${menu.currency}"
+                menuName.text= "${menu.name_menu}"
+                price.text= "${menu.price} ${menu.currencies}"
                 amountSold.text= "${menu.sold} Terjual"
-                amount.text= menu.getAmount().toString()
+                amount.text= menu.amount.toString()
                 description.text= "${menu.description}"
 
             }
@@ -36,21 +38,29 @@ class MenuAdapter (private var list: ArrayList<MenuItemStuff>): RecyclerView.Ada
     override fun getItemCount(): Int = list.size;
 
     override fun onBindViewHolder(holder:MenuViewHolder, position: Int) {
+
         holder.bind(list[position])
+
         holder.itemView.findViewById<Button>(R.id.plus).setOnClickListener{
-            list.get(position).incrementAmount()
-            holder.itemView.findViewById<TextView>(R.id.amount).text = list.get(position).getAmount().toString()
-            println("berhasil buat nambah " + list.get(position).name + " sebanyak " + list.get(position).getAmount())
+            val view_amount  = holder.itemView.findViewById<TextView>(R.id.amount)
+            val updated_amount = view_amount.text.toString().toInt() + 1
+            view_amount.text = updated_amount.toString()
+            keranjangDao.update(list.get(position).name_menu!!, updated_amount)
         }
 
         holder.itemView.findViewById<Button>(R.id.minus).setOnClickListener{
-            list.get(position).decrementAmount()
-            holder.itemView.findViewById<TextView>(R.id.amount).text = list.get(position).getAmount().toString()
-            println("berhasil buat ngurang " + list.get(position).name + " sebanyak " + list.get(position).getAmount())
+            val view_amount  = holder.itemView.findViewById<TextView>(R.id.amount)
+            val current_amount = view_amount.text.toString().toInt()
+            var updated_amount = 0
+            if (current_amount > 0) {
+                updated_amount = (current_amount-1)
+            }
+            view_amount.text = updated_amount.toString()
+            keranjangDao.update(list.get(position).name_menu!!, updated_amount)
         }
     }
 
-    fun filtering(list: ArrayList<MenuItemStuff>) {
+    fun filtering(list: ArrayList<MenuDatabase>) {
         this.list = list
         notifyDataSetChanged()
     }

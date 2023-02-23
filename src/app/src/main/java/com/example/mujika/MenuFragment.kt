@@ -21,79 +21,33 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import roomdb.AppDatabase
+import roomdb.KeranjangDao
 import roomdb.MenuDatabase
 import roomdb.TypeMenu
 
 class MenuFragment : Fragment() {
 
-    private var listMakanan = ArrayList<MenuItemStuff>()
-    private var listMinuman = ArrayList<MenuItemStuff>()
-    private var orderedMakananMinuman = ArrayList<MenuItemStuff>()
+    private var listMakanan = ArrayList<MenuDatabase>()
+    private var listMinuman = ArrayList<MenuDatabase>()
+    private var orderedMakananMinuman = ArrayList<MenuDatabase>()
     private var list = ArrayList<MenuItemStuff>()
-    private lateinit var appDb : AppDatabase
+    private lateinit var keranjangDao : KeranjangDao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        appDb = AppDatabase.getDatabase(requireContext())
+        val appDb = AppDatabase.getDatabase(requireContext())
+        keranjangDao = appDb.keranjangDao()
         (activity as AppCompatActivity).supportActionBar?.title = "Menu"
         setHasOptionsMenu(true)
 
-        return inflater.inflate(R.layout.fragment_menu, container, false)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        menu.clear()
-        inflater.inflate(R.menu.menu_option_bar, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view)
-        val searchView = view?.findViewById<SearchView>(R.id.search_view_menu)
-        when (item.itemId) {
-            R.id.menu_main_setting -> {
-                val adapter = MenuAdapter(listMakanan)
-                recyclerView?.adapter = adapter
-                searchView?.clearFocus()
-                searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-                        return false
-                    }
-                    override fun onQueryTextChange(newText: String?): Boolean {
-                        filterList(newText, adapter)
-                        return true
-                    }
-                })
-            }
-            R.id.menu_main_setting2 -> {
-                val adapter = MenuAdapter(listMinuman)
-                recyclerView?.adapter = adapter
-                println("drink letwe go")
-                searchView?.clearFocus()
-                searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-                        return false
-                    }
-                    override fun onQueryTextChange(newText: String?): Boolean {
-                        filterList(newText, adapter)
-                        return true
-                    }
-                })
-
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        val view = inflater.inflate(R.layout.fragment_menu, container, false)
 
         val messageTest = view.findViewById<TextView>(R.id.message_test)
         val searchView = view.findViewById<SearchView>(R.id.search_view_menu)
-        val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view)
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recycler_view)
 
         super.onViewCreated(view, savedInstanceState)
         println("dari onViewCreated tiap kali ngetikkah?")
@@ -112,30 +66,31 @@ class MenuFragment : Fragment() {
                 listResponse?.let {list.addAll(it)}
 
                 list.forEach {
-                    var type = it?.let {
+                    val type = it.let {
                         val converting = TypeMenu.valueOf(it.type!!)
                         converting
                     }
-                    var new_menu = MenuDatabase(
+                    val new_menu = MenuDatabase(
                         id_cart_menu = null,
                         name_menu = it.name,
                         type_menu = type,
                         description = it.description,
                         price = it.price,
                         sold = it.sold,
-                        currencies = it.currency
+                        currencies = it.currency,
+                        amount = it.getAmount()
                     )
                     writeData(new_menu)
-                    if (it.type == "Food") {
-                        listMakanan.add(it)
-                    }
-                    else {
-                        listMinuman.add(it)
-                    }
                 }
-                orderedMakananMinuman?.addAll(listMakanan)
-                orderedMakananMinuman?.addAll(listMinuman)
-                val adapter = MenuAdapter(orderedMakananMinuman)
+                lifecycleScope.launch() {
+                    val tempMakanan = keranjangDao.findByType(TypeMenu.Food)
+                    val tempMinuman = keranjangDao.findByType(TypeMenu.Drink)
+                    listMakanan = ArrayList(tempMakanan)
+                    listMinuman = ArrayList(tempMinuman)
+                }
+                orderedMakananMinuman.addAll(listMakanan)
+                orderedMakananMinuman.addAll(listMinuman)
+                val adapter = MenuAdapter(orderedMakananMinuman, keranjangDao)
 
                 searchView.clearFocus()
                 searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -149,23 +104,67 @@ class MenuFragment : Fragment() {
                 })
 
                 recyclerView?.layoutManager = LinearLayoutManager(activity)
-                recyclerView?.adapter = adapter;
+                recyclerView?.adapter = adapter
             }
         })
-
+        return view
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        menu.clear()
+        inflater.inflate(R.menu.menu_option_bar, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view)
+        val searchView = view?.findViewById<SearchView>(R.id.search_view_menu)
+        when (item.itemId) {
+            R.id.menu_main_setting -> {
+                val adapter = MenuAdapter(listMakanan, keranjangDao)
+                recyclerView?.adapter = adapter
+                searchView?.clearFocus()
+                searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return false
+                    }
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        filterList(newText, adapter)
+                        return true
+                    }
+                })
+            }
+            R.id.menu_main_setting2 -> {
+                val adapter = MenuAdapter(listMinuman, keranjangDao)
+                recyclerView?.adapter = adapter
+                searchView?.clearFocus()
+                searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return false
+                    }
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        filterList(newText, adapter)
+                        return true
+                    }
+                })
+
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 
     private fun writeData(data: MenuDatabase) {
         lifecycleScope.launch() {
-            appDb.keranjangDao().insert(data)
+            keranjangDao.insert(data)
         }
     }
 
     fun filterList(query : String?, adapter: MenuAdapter) {
         if (query != null) {
-            val filteredMenu = ArrayList<MenuItemStuff>()
-            list.forEach {
-                if (it.name?.toLowerCase()!!.contains(query.toLowerCase())) {
+            val filteredMenu = ArrayList<MenuDatabase>()
+            orderedMakananMinuman.forEach {
+                if (it.name_menu?.lowercase()!!.contains(query.lowercase())) {
                     filteredMenu.add(it)
                 }
             }
