@@ -1,16 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_menu"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/light_cream"
+    android:layout_marginBottom="0.3in"
+    android:layout_marginTop="0.3in"
     tools:context=".KeranjangFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="@string/title_keranjang"
-        android:textSize="25sp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
-</RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_keranjang"
+            android:layout_width="match_parent"
+            android:gravity="top"
+            app:layout_constraintBottom_toTopOf="@+id/layout_pembayaran"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.03"
+            tools:layout_editor_absoluteX="0dp"
+            android:elevation="15dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="5px"
+            android:layout_marginBottom="5px"/>
+
+        <LinearLayout
+            android:id="@+id/layout_pembayaran"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:layout_editor_absoluteX="0dp">
+
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                tools:layout_editor_absoluteX="16dp">
+
+                <TextView
+                    android:id="@+id/total_pembayaran"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total:"
+                    android:textSize="18dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/harga_total_pembayaran"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Rp"
+                    android:textSize="16dp"
+                    android:textColor="@color/black"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/greetings"
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:layout_margin="10dp"
+                android:backgroundTint="@color/dark_red"
+                android:gravity="center"
+                android:text="Bayar"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>
