@@ -13,6 +13,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import roomdb.AppDatabase
+import roomdb.KeranjangDao
+
 //import kotlinx.android.synthetic.*
 
 class PaymentSuccessFragment : Fragment() {
@@ -27,7 +30,8 @@ class PaymentSuccessFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_payment_success, container, false)
-
+        val appDb = AppDatabase.getDatabase(requireContext())
+        val keranjangDao = appDb.keranjangDao()
         val countdownMsg = view.findViewById<TextView>(R.id.countdown)
         val timer = object: CountDownTimer(5000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
@@ -36,7 +40,7 @@ class PaymentSuccessFragment : Fragment() {
 
             override fun onFinish() {
                 val activity = activity as? MainActivity
-                activity?.removeFragment("Keranjang")
+                keranjangDao.update()
                 // Menu Fragment should have been created
                 activity?.changeFragment("Menu")
             }
