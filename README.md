@@ -53,4 +53,4 @@ Halaman Keranjang
 | -------- | ------------------- | ---------------------------------------------------- | ------------------------------------- |
 | 13520005 | Christine Hutabarat | Pembayaran, Halaman Cabang Restoran, Manage Fragment | 9 jam persiapan + 45 jam pengerjaan   |
 | 13520097 | Angelica Winasta S  | Database, Halaman Keranjang, Halaman Menu            | 9 jam persiapan + 45 jam pengerjaan   |
-| 13520121 | Nicholas Budiono    | Halaman Twibbon, Navbar, Navigation Bar              | 9 jam persiapan + \_\_ jam pengerjaan |
+| 13520121 | Nicholas Budiono    | Halaman Twibbon, Navbar, Navigation Bar              | 15 jam persiapan + 35 jam pengerjaan  |
