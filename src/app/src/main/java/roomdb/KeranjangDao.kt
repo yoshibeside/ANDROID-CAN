@@ -13,8 +13,8 @@ interface KeranjangDao {
     @Query("SELECT * FROM menu_table WHERE type_menu == :type")
     fun findByType(type: TypeMenu): List<MenuDatabase>
 
-    @Query("UPDATE menu_table SET amount_menu=:amount_item WHERE name_menu = :name")
-    fun  update(name: String, amount_item: Int)
+    @Query("UPDATE menu_table SET amount_menu=:amount_item WHERE id_cart_menu = :id")
+    fun  update(id: Int, amount_item: Int)
 
     @Query("UPDATE menu_table SET amount_menu=0")
     fun  update()
