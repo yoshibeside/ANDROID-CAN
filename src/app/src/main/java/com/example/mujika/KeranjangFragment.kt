@@ -26,6 +26,7 @@ import roomdb.TypeMenu
 class KeranjangFragment : Fragment() {
 
     private lateinit var keranjangDao : KeranjangDao
+    var list_menu_keranjang = ArrayList<MenuDatabase>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -42,23 +43,23 @@ class KeranjangFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bayarBtn = view.findViewById<Button>(R.id.bayar)
-        bayarBtn.setOnClickListener {
-            val activity = activity as? MainActivity
-            activity?.changeFragment("Pembayaran")
+        if (!list_menu_keranjang.isNullOrEmpty()) {
+            bayarBtn.setOnClickListener {
+                val activity = activity as? MainActivity
+                activity?.changeFragment("Pembayaran")
+            }
         }
     }
 
     override fun onResume() {
         super.onResume()
         val recyclerView = view?.findViewById<RecyclerView>(R.id.recycler_view_keranjang)
-        var list_menu_keranjang = ArrayList<MenuDatabase>()
 
         lifecycleScope.launch() {
             val tempKeranjang = keranjangDao.findMenu()
             list_menu_keranjang = ArrayList(tempKeranjang)
         }
         if (!list_menu_keranjang.isNullOrEmpty()) {
-            println(list_menu_keranjang)
             val adapter = KeranjangAdaptor(list_menu_keranjang, keranjangDao, object: KeranjangAdaptor.OnDataUpdateListener {
                 override fun onDataUpdate() {
                     val updateTotalPrice = keranjangDao.getTotalPrice()
