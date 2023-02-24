@@ -40,25 +40,23 @@ class KeranjangAdaptor (private var list: ArrayList<MenuDatabase>, private val k
 
         holder.bind(list[position])
 
-        println("terjalnaknan onBindViewHolder")
-
         holder.itemView.findViewById<Button>(R.id.plus_keranjang).setOnClickListener{
-            val name_menu_updating = list.get(position).name_menu!!
+            val id_updating = list.get(position).id_cart_menu!!
+            val id_menu_updating = list.get(position).id_cart_menu
             val updated_amount = (holder.itemView.findViewById<TextView>(R.id.amount_keranjang).text.toString()).toInt() + 1
             val string_price = String.format("Rp %d", updated_amount* list.get(position).price!!)
             holder.itemView.findViewById<TextView>(R.id.amount_keranjang).text = updated_amount.toString()
             holder.itemView.findViewById<TextView>(R.id.fullprice).text = string_price
-            keranjangDao.update(name_menu_updating, updated_amount)
+            keranjangDao.update(id_updating, updated_amount)
             onDataUpdateListener.onDataUpdate()
         }
 
         holder.itemView.findViewById<Button>(R.id.minus_keranjang).setOnClickListener{
-            val name_menu_updating = list.get(position).name_menu!!
+            val id_updating = list.get(position).id_cart_menu!!
             val updated_amount =  (holder.itemView.findViewById<TextView>(R.id.amount_keranjang).text.toString()).toInt() - 1
             val string_price = String.format("Rp %d", updated_amount* list.get(position).price!!)
             println("updated amountnya adalah segini " + updated_amount)
             if (updated_amount ==  0) {
-                println("malah masuk ke 0")
                 list.removeAt(position)
                 notifyItemRemoved(position)
                 notifyItemRangeChanged(position, list.size)
@@ -66,7 +64,7 @@ class KeranjangAdaptor (private var list: ArrayList<MenuDatabase>, private val k
                 holder.itemView.findViewById<TextView>(R.id.amount_keranjang).text = updated_amount.toString()
                 holder.itemView.findViewById<TextView>(R.id.fullprice).text = string_price
             }
-            keranjangDao.update(name_menu_updating, updated_amount)
+            keranjangDao.update(id_updating, updated_amount)
             onDataUpdateListener.onDataUpdate()
         }
         onDataUpdateListener.onDataUpdate()

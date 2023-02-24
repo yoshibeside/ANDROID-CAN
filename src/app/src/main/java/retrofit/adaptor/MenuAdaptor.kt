@@ -114,7 +114,7 @@ class MenuAdapter (private var heading1: String, private var heading2: String, p
                     val updated_amount = view_amount.text.toString().toInt() + 1
                     view_amount.text = updated_amount.toString()
                     list1.get(currentPosition).amount = updated_amount
-                    keranjangDao.update(list1.get(currentPosition).name_menu!!, updated_amount)
+                    keranjangDao.update(list1.get(currentPosition).id_cart_menu!!, updated_amount)
                 }
                 itemViewHolder.itemView.findViewById<Button>(R.id.minus).setOnClickListener{
                     val view_amount  = holder.itemView.findViewById<TextView>(R.id.amount)
@@ -125,7 +125,7 @@ class MenuAdapter (private var heading1: String, private var heading2: String, p
                     }
                     view_amount.text = updated_amount.toString()
                     list1.get(currentPosition).amount = updated_amount
-                    keranjangDao.update(list1.get(currentPosition).name_menu!!, updated_amount)
+                    keranjangDao.update(list1.get(currentPosition).id_cart_menu!!, updated_amount)
                 }
             }
             VIEW_TYPE_MENUITEM2 -> {
@@ -138,7 +138,7 @@ class MenuAdapter (private var heading1: String, private var heading2: String, p
                     val updated_amount = view_amount.text.toString().toInt() + 1
                     view_amount.text = updated_amount.toString()
                     list2.get(currentPosition).amount = updated_amount
-                    keranjangDao.update(list2.get(currentPosition).name_menu!!, updated_amount)
+                    keranjangDao.update(list2.get(currentPosition).id_cart_menu!!, updated_amount)
                 }
                 itemViewHolder.itemView.findViewById<Button>(R.id.minus).setOnClickListener{
                     val view_amount  = holder.itemView.findViewById<TextView>(R.id.amount)
@@ -149,7 +149,7 @@ class MenuAdapter (private var heading1: String, private var heading2: String, p
                     }
                     view_amount.text = updated_amount.toString()
                     list2.get(currentPosition).amount = updated_amount
-                    keranjangDao.update(list2.get(currentPosition).name_menu!!, updated_amount)
+                    keranjangDao.update(list2.get(currentPosition).id_cart_menu!!, updated_amount)
                 }
             }
         }
