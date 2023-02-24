@@ -3,8 +3,11 @@ package com.example.mujika
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -54,15 +57,23 @@ class KeranjangFragment : Fragment() {
             list_menu_keranjang = ArrayList(tempKeranjang)
         }
         if (!list_menu_keranjang.isNullOrEmpty()) {
+            view?.findViewById<LinearLayout>(R.id.layout_pembayaran)?.visibility = VISIBLE
             val adapter = KeranjangAdaptor(list_menu_keranjang, keranjangDao, object: KeranjangAdaptor.OnDataUpdateListener {
                 override fun onDataUpdate() {
                     val updateTotalPrice = keranjangDao.getTotalPrice()
                     val textTotalPrice = String.format("Rp %d", updateTotalPrice)
-                    view?.findViewById<TextView>(R.id.harga_total_pembayaran)?.text = textTotalPrice
+                    if (updateTotalPrice == 0) {
+                        view?.findViewById<LinearLayout>(R.id.layout_pembayaran)?.visibility = INVISIBLE
+                    } else {
+                        view?.findViewById<TextView>(R.id.harga_total_pembayaran)?.text =
+                            textTotalPrice
+                    }
                 }
             })
             recyclerView?.layoutManager = LinearLayoutManager(activity)
             recyclerView?.adapter = adapter
+        } else {
+            view?.findViewById<LinearLayout>(R.id.layout_pembayaran)?.visibility = INVISIBLE
         }
     }
 
