@@ -6,10 +6,12 @@
     <string name="title_keranjang">Keranjang</string>
     <string name="pembayaran">Pembayaran</string>
     <string name="nama_restoran">Cabang Restoran 1</string>
-    <string name="alamat_restoran">Jalan Ganesa No.10, Lb. Siliwangi, Kecamatan Coblong, Bandung, Jawa Barat, 40132</string>
+    <string name="alamat_restoran">Jalan Ganesa No.10</string>
     <string name="no_telp_restoran">14045</string>
     <string name="error_msg">Unable to fetch data</string>
     <string name="photo">Take A Photo</string>
     <string name="payment_success_msg">Payment Successful</string>
     <string name="capture">Capture</string>
+    <string name="total_amount">Mahal deh pokoknya</string>
+
 </resources>

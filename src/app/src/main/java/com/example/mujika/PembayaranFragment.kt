@@ -10,6 +10,7 @@ import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
+import android.widget.TextView
 import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.fragment.app.Fragment
@@ -22,21 +23,27 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import okhttp3.ResponseBody
+import retrofit.adaptor.KeranjangAdaptor
 import retrofit.api.RetrofitClient
 import retrofit2.Call
 import retrofit2.Callback
+import roomdb.AppDatabase
+import roomdb.KeranjangDao
 
 class PembayaranFragment : Fragment() {
 
     private lateinit var codeScanner: CodeScanner
     private var appBar: AppBarLayout? = null
     private var bottomNav: BottomNavigationView? = null
+    private lateinit var keranjangDao : KeranjangDao
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val appDb = AppDatabase.getDatabase(requireContext())
+        keranjangDao = appDb.keranjangDao()
         return inflater.inflate(R.layout.fragment_pembayaran, container, false)
     }
 
@@ -45,7 +52,9 @@ class PembayaranFragment : Fragment() {
         appBar = parentView?.findViewById(R.id.app_bar)
         bottomNav = parentView?.findViewById(R.id.bottom_navigation)
 
-        val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+        val updateTotalPrice = keranjangDao.getTotalPrice()
+        val textTotalPrice = String.format("Rp %d", updateTotalPrice)
+        view?.findViewById<TextView>(R.id.harga_total_pembayaran)?.text = textTotalPrice
 
         val scannerView = view.findViewById<CodeScannerView>(R.id.scanner_view)
         val activity = requireActivity()
