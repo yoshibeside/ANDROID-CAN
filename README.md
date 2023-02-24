@@ -47,6 +47,13 @@ Searching di Menu
 ![alt text](./ss/keranjang.jpg "Halaman Keranjang"){height=300}
 Halaman Keranjang
 
+![alt text](./ss/scanner.jpg "Halaman Pembayaran"){height=300}
+Halaman Pembayaran
+
+![alt text](./ss/payment_success.jpg "Pembayaran Berhasil"){height=300}
+Pembayaran Berhasil
+
+
 ## Pembagian Tugas
 
 | NIM      | NAMA                | TASK                                                 | Total Jam                             |
