@@ -32,9 +32,9 @@ abstract class AppDatabase : RoomDatabase(){
                     AppDatabase::class.java,
                     "app_database"
                 ).fallbackToDestructiveMigration().allowMainThreadQueries().build()
+                instance.clearAllTables()
                 INSTANCE = instance
                 return instance
-
             }
 
         }
