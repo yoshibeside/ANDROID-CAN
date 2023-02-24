@@ -113,13 +113,70 @@ class MenuFragment : Fragment(), SensorEventListener {
                         return true
                     }
                 })
-                println("Saat on response jumlahnya adalah seabgai beriut ")
                 recyclerViewMinuman?.layoutManager = LinearLayoutManager(activity)
                 recyclerViewMinuman?.adapter = adapterAll
             }
         })
-
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        RetrofitClient.instance.getMenu().enqueue(object: Callback<ListMenu> {
+            override fun onFailure(call: Call<ListMenu>, t: Throwable) {
+                val message = "terjadi kesalahan fetch dan tidak berhasil untuk masuk database"
+                println(message)
+            }
+
+            override fun onResponse(call: Call<ListMenu>, response: Response<ListMenu>) {
+                println(response.code().toString())
+
+                val listResponse = response.body()?.data
+                listResponse?.let {list.addAll(it)}
+
+                list.forEach {
+                    val type = it.let {
+                        val converting = TypeMenu.valueOf(it.type!!)
+                        converting
+                    }
+                    val new_menu = MenuDatabase(
+                        id_cart_menu = null,
+                        name_menu = it.name,
+                        type_menu = type,
+                        description = it.description,
+                        price = it.price,
+                        sold = it.sold,
+                        currencies = it.currency,
+                        amount = it.getAmount()
+                    )
+                    writeData(new_menu)
+                }
+                val searchView = view?.findViewById<SearchView>(R.id.search_view_menu)
+                val recyclerViewMinuman = view?.findViewById<RecyclerView>(R.id.recycler_view_minuman)
+
+                lifecycleScope.launch() {
+                    val tempMakanan = keranjangDao.findByType(TypeMenu.Food)
+                    val tempMinuman = keranjangDao.findByType(TypeMenu.Drink)
+                    listMakanan = ArrayList(tempMakanan)
+                    listMinuman = ArrayList(tempMinuman)
+                }
+                val adapterAll = MenuAdapter("Makanan","Minuman", listMakanan, listMinuman, keranjangDao)
+
+                searchView?.clearFocus()
+                searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(query: String?): Boolean {
+                        return false
+                    }
+
+                    override fun onQueryTextChange(newText: String?): Boolean {
+                        filterList(newText, adapterAll)
+                        return true
+                    }
+                })
+                recyclerViewMinuman?.layoutManager = LinearLayoutManager(activity)
+                recyclerViewMinuman?.adapter = adapterAll
+            }
+        })
     }
 
     override fun onResume() {
