@@ -29,6 +29,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import roomdb.AppDatabase
 import roomdb.KeranjangDao
+import java.text.NumberFormat
+import java.util.*
 
 class PembayaranFragment : Fragment() {
 
@@ -51,10 +53,10 @@ class PembayaranFragment : Fragment() {
         val parentView = (view.parent as? FrameLayout)?.parent as? RelativeLayout
         appBar = parentView?.findViewById(R.id.app_bar)
         bottomNav = parentView?.findViewById(R.id.bottom_navigation)
-
+        val formator = NumberFormat.getInstance(Locale.ENGLISH)
         val updateTotalPrice = keranjangDao.getTotalPrice()
-        val textTotalPrice = String.format("Rp %d", updateTotalPrice)
-        view?.findViewById<TextView>(R.id.harga_total_pembayaran)?.text = textTotalPrice
+        val textTotalPrice = String.format("Rp %s", formator.format(updateTotalPrice))
+        view?.findViewById<TextView>(R.id.total_amount)?.text = textTotalPrice
 
         val scannerView = view.findViewById<CodeScannerView>(R.id.scanner_view)
         val activity = requireActivity()

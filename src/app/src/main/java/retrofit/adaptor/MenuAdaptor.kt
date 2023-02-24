@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.mujika.R
 import roomdb.KeranjangDao
 import roomdb.MenuDatabase
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MenuAdapter (private var heading1: String, private var heading2: String, private var list1: ArrayList<MenuDatabase>, private var list2: ArrayList<MenuDatabase>, private val keranjangDao: KeranjangDao ): RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
@@ -39,9 +42,10 @@ class MenuAdapter (private var heading1: String, private var heading2: String, p
             val amount = itemView.findViewById<TextView>(R.id.amount)
             val description = itemView.findViewById<TextView>(R.id.description)
             with(itemView){
+                val formator = NumberFormat.getInstance(Locale.ENGLISH)
                 menuName.text= "${menu.name_menu}"
-                price.text= "${menu.price} ${menu.currencies}"
-                amountSold.text= "${menu.sold} Terjual"
+                price.text= "Rp ${formator.format(menu.price)}"
+                amountSold.text= "${formator.format(menu.sold)} Terjual"
                 amount.text= menu.amount.toString()
                 description.text= "${menu.description}"
             }
@@ -56,9 +60,10 @@ class MenuAdapter (private var heading1: String, private var heading2: String, p
             val amount = itemView.findViewById<TextView>(R.id.amount)
             val description = itemView.findViewById<TextView>(R.id.description)
             with(itemView){
+                val formator = NumberFormat.getInstance(Locale.ENGLISH)
                 menuName.text= "${menu.name_menu}"
-                price.text= "${menu.price} ${menu.currencies}"
-                amountSold.text= "${menu.sold} Terjual"
+                price.text= "Rp ${formator.format(menu.price)}"
+                amountSold.text= "${formator.format(menu.sold)} Terjual"
                 amount.text= menu.amount.toString()
                 description.text= "${menu.description}"
             }

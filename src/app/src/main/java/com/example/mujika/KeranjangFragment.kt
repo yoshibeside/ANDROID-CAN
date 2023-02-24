@@ -19,6 +19,9 @@ import retrofit.adaptor.KeranjangAdaptor
 import roomdb.AppDatabase
 import roomdb.KeranjangDao
 import roomdb.MenuDatabase
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class KeranjangFragment : Fragment() {
 
@@ -40,6 +43,10 @@ class KeranjangFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val bayarBtn = view.findViewById<Button>(R.id.bayar)
+        lifecycleScope.launch() {
+            val tempKeranjang = keranjangDao.findMenu()
+            list_menu_keranjang = ArrayList(tempKeranjang)
+        }
         if (!list_menu_keranjang.isNullOrEmpty()) {
             bayarBtn.setOnClickListener {
                 val activity = activity as? MainActivity
@@ -58,10 +65,11 @@ class KeranjangFragment : Fragment() {
         }
         if (!list_menu_keranjang.isNullOrEmpty()) {
             view?.findViewById<LinearLayout>(R.id.layout_pembayaran)?.visibility = VISIBLE
+            val formator = NumberFormat.getInstance(Locale.ENGLISH)
             val adapter = KeranjangAdaptor(list_menu_keranjang, keranjangDao, object: KeranjangAdaptor.OnDataUpdateListener {
                 override fun onDataUpdate() {
                     val updateTotalPrice = keranjangDao.getTotalPrice()
-                    val textTotalPrice = String.format("Rp %d", updateTotalPrice)
+                    val textTotalPrice = String.format("Rp %s", formator.format(updateTotalPrice))
                     if (updateTotalPrice == 0) {
                         view?.findViewById<LinearLayout>(R.id.layout_pembayaran)?.visibility = INVISIBLE
                     } else {
@@ -75,17 +83,5 @@ class KeranjangFragment : Fragment() {
         } else {
             view?.findViewById<LinearLayout>(R.id.layout_pembayaran)?.visibility = INVISIBLE
         }
-    }
-
-    override fun onDestroy() {
-        keranjangDao.update()
-        println("did it go here? destroy keranjang pls")
-        super.onDestroy()
-    }
-
-    override fun onDetach() {
-        keranjangDao.update()
-        println("did it go here? destroy keranjang pls this is detach tho")
-        super.onDetach()
     }
 }
