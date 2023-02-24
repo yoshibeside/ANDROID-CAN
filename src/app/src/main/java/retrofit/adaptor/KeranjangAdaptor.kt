@@ -2,7 +2,6 @@ package retrofit.adaptor
 
 
 import android.view.LayoutInflater
-import retrofit.model.MenuItemStuff
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button

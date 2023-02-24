@@ -1,27 +1,21 @@
 package com.example.mujika
 
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
-import android.widget.SearchView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.coroutines.launch
 import retrofit.adaptor.KeranjangAdaptor
-import retrofit.adaptor.MenuAdapter
-import retrofit.api.RetrofitClient
-import retrofit.model.ListMenu
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import roomdb.AppDatabase
 import roomdb.KeranjangDao
 import roomdb.MenuDatabase
-import roomdb.TypeMenu
 
 class KeranjangFragment : Fragment() {
 

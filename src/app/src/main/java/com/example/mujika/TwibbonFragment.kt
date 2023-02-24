@@ -1,5 +1,6 @@
 package com.example.mujika
 
+//import kotlinx.android.synthetic.main.fragment_twibbon.*
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -24,8 +25,6 @@ import androidx.camera.view.PreviewView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.google.android.material.button.MaterialButton
-//import kotlinx.android.synthetic.main.fragment_twibbon.*
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat

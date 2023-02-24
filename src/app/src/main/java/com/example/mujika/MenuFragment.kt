@@ -1,7 +1,6 @@
 package com.example.mujika
 
 import android.content.Context
-import android.content.res.Configuration
 import android.graphics.Color
 import android.hardware.Sensor
 import android.hardware.SensorEvent
@@ -12,17 +11,13 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.view.*
-import androidx.fragment.app.Fragment
-import android.widget.Toast
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.view.Menu
-import android.view.MenuItem
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.core.content.getSystemService
 import kotlinx.coroutines.launch
 import retrofit.adaptor.MenuAdapter
 import retrofit.api.RetrofitClient

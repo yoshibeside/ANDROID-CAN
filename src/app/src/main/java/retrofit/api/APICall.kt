@@ -1,6 +1,5 @@
 package retrofit.api
 
-import okhttp3.Response
 import okhttp3.ResponseBody
 import retrofit.model.ListCabangRestoran
 import retrofit.model.ListMenu

@@ -7,7 +7,6 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mujika.R
-import retrofit.model.MenuItemStuff
 import roomdb.KeranjangDao
 import roomdb.MenuDatabase
 
